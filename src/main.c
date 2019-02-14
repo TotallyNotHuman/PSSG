@@ -23,6 +23,7 @@ int main(void) {
      * 0 = radius of sector
      * 1 = number of stars
      * 2 = generation
+     * 3 = display
      * 4 = cleanup
      */
     printf("Procedural Star Generator, version %s\n", VERSION);
@@ -126,7 +127,6 @@ int main(void) {
                             stars[j]->lumtype = "V";
                         }
                     }
-                    // print status message
                     j++;
                 }
                 state = 3;
