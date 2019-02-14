@@ -70,7 +70,7 @@ char* star_tostring(star_t* star) {
                     star->spectype, star->subdiv, star->lumtype, specstr, lumstr,
                     star->coords[0], star->coords[1], star->coords[2]);
     } else {
-        sprintf(starstr, "Star class: %s)\nCoordinates: (%.2f, %.2f, %.2f)\n",
+        sprintf(starstr, "Star class: %s\nCoordinates: (%.2f, %.2f, %.2f)\n",
                     specstr, star->coords[0], star->coords[1], star->coords[2]);
     }
     return starstr;
