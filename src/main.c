@@ -55,13 +55,10 @@ int main(void) {
                 break;
             case 2:
                 printf("Generating %hu stars in a spherical sector with %hu ly radius.\n", param[1], param[0]);
-                printf("Allocating memory... ");
                 star_t** stars = malloc(param[1] * sizeof(star_t*));
                 for (unsigned short i = 0; i < param[1]; i++) {
                     stars[i] = malloc(sizeof(star_t));
                 }
-                printf("done.\n");
-                printf("Generating stars... %hu stars remaining.\n", param[1]);
                 unsigned short j = 0;
                 while (j < param[1]) {
                     // generate coordinates and store them as cartesian
@@ -131,9 +128,7 @@ int main(void) {
                     }
                     // print status message
                     j++;
-                    printf("%hu stars remaining.\n", param[1] - j);
                 }
-                printf("...done.\n");
                 state = 3;
                 break;
             case 3:
