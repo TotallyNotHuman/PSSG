@@ -7,5 +7,6 @@ The initial phase of the development of this program will focus exclusively on t
 
 Compilation instructions:
 
-`scripts/genver.sh`
+`cd scripts/`
+`./genver.sh`
 `gcc src/main.c src/star.c -lm`
