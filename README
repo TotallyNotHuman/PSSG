@@ -1,5 +1,11 @@
 Procedural Star System Generator
 ================================
+
 Phase 1: Star Generation
 
 The initial phase of the development of this program will focus exclusively on the generation of plausible stars. While higher-order systems will be introduced in phase 2, it is not currently considered.
+
+Compilation instructions:
+
+`scripts/genver.sh`
+`gcc src/main.c src/star.c -lm`
