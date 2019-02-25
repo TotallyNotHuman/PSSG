@@ -73,61 +73,7 @@ int main(void) {
                     stars[j]->coords[2] = cartgen[2];
                     free(cartgen);
                     free(sphrgen);
-                    // generate spectral type
-                    unsigned long spectnum = (unsigned long) round(randbl(0.0, 1.0) * pow(10.0, 10.0)) - 1;
-                    unsigned char ismains = 1;
-                    char spect;
-                    if ((spectnum >= 0) && (spectnum <= 866)) {
-                        spect = 'W';
-                        ismains = 0;
-                    } else if ((spectnum >= 867) && (spectnum <= 131885)) {
-                        spect = 'O';
-                    } else if ((spectnum >= 131886) && (spectnum <= 6935751)) {
-                        spect = 'N';
-                        ismains = 0;
-                    } else if ((spectnum >= 6935752) && (spectnum <= 19859904)) {
-                        spect = 'B';
-                    } else if ((spectnum >= 19859905) && (spectnum <= 35859904)) {
-                        spect = 'D';
-                        ismains = 0;
-                    } else if ((spectnum >= 35859905) && (spectnum <= 95887923)) {
-                        spect = 'A';
-                    } else if ((spectnum >= 95887924) && (spectnum <= 395915942)) {
-                        spect = 'F';
-                    } else if ((spectnum >= 395915943) && (spectnum <= 1155943961)) {
-                        spect = 'G';
-                    } else if ((spectnum >= 1155943962) && (spectnum <= 2364831885)) {
-                        spect = 'K';
-                    } else if ((spectnum >= 2364831886) && (spectnum <= 9999999999)) {
-                        spect = 'M';
-                    }
-                    stars[j]->spectype = spect;
-                    // neutron/pulsar pass
-                    if ((spect == 'N') && (rand() % 500 == 0)) {
-                        stars[j]->spectype = 'P';
-                    }
-                    // generate subdivision
-                    if (ismains) {
-                        stars[j]->subdiv = rand() % 10;
-                    }
-                    // generate luminosity classes
-                    if (ismains) {
-                        unsigned short lunum = rand() % 10000;
-                        if ((lunum >= 0) && (lunum <= 71)) {
-                            stars[j]->lumtype = "Ia";
-                        } else if ((lunum >= 72) && (lunum <= 220)) {
-                            stars[j]->lumtype = "Ib";
-                        } else if ((lunum >= 221) && (lunum <= 485)) {
-                            stars[j]->lumtype = "II";
-                        } else if ((lunum >= 486) && (lunum <= 1632)) {
-                            stars[j]->lumtype = "III";
-                        } else if ((lunum >= 1633) && (lunum <= 5579)) {
-                            stars[j]->lumtype = "IV";
-                        } else if ((lunum >= 5580) && (lunum <= 9999)) {
-                            stars[j]->lumtype = "V";
-                        }
-                    }
-                    j++;
+                    // TODO: implement mass generation and other correlations
                 }
                 state = 3;
                 break;
