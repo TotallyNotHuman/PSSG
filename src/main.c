@@ -65,15 +65,17 @@ int main(void) {
                     // generate coordinates and store them as cartesian
                     double* sphrgen = malloc(3 * sizeof(double));
                     sphrgen[0] = randbl(0.01, param[0]);
-                    sphrgen[1] = randbl(0, PI);
-                    sphrgen[2] = randbl(0, 2 * PI);
+                    sphrgen[1] = randbl(0.0, PI);
+                    sphrgen[2] = randbl(0.0, 2.0 * PI);
                     double* cartgen = sphr2cart(sphrgen);
                     stars[j]->coords[0] = cartgen[0];
                     stars[j]->coords[1] = cartgen[1];
                     stars[j]->coords[2] = cartgen[2];
                     free(cartgen);
                     free(sphrgen);
-                    // TODO: implement mass generation and other correlations
+                    // generate selection factor
+                    double sfac = randbl(0.0, 1.0);
+                    // TODO: implement mass (derived from sfac) and other correlations
                 }
                 state = 3;
                 break;
