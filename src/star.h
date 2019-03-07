@@ -8,10 +8,7 @@ typedef struct star {
     unsigned short temp; // temperature of star in K
     char spectype; // spectral class of star
     unsigned short subdiv; // digit subdivision of star
-    char* lumtype; // luminosity class of star
     double coords[3]; // coordinates of star wrt center
 } star_t;
-
-char* star_tostring(star_t* star);
 
 #endif//STAR_H
