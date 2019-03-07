@@ -75,15 +75,21 @@ int main(void) {
                     free(sphrgen);
                     // generate selection factor
                     double sfac = randbl(0.0, 1.0);
-                    // TODO: implement mass (derived from sfac) and other correlations
+                    // generate mass from selfac
+                    stars[j]->mass = sfac2mass(sfac);
+                    // generate lum from mass
+                    stars[j]->luminosity = mass2lum(stars[j]->mass);
+                    // increment counter
+                    j++;
                 }
                 state = 3;
                 break;
             case 3:
                 for (unsigned short i = 0; i < param[1]; i++) {
-                    char* starstr = star_tostring(stars[i]);
+                    /*char* starstr = star_tostring(stars[i]);
                     printf("%s\n", starstr);
-                    free(starstr);
+                    free(starstr);*/
+                    printf("M = %.3f, L = %.3f\n", stars[i]->mass, stars[i]->luminosity); // debug string for mass/lum
                 }
                 state = 4;
                 break;
