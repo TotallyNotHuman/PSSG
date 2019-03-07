@@ -23,12 +23,12 @@ double randbl(double min, double max) {
 
 // compute mass from selection factor
 double sfac2mass(double s) {
-    if (s > 0.718) {
+    if (s > 0.719) {
         // mass > 1 case
-        return 0.378247 / pow((1.00029 - s), (10.0 / 13.0));
+        return 0.378843 / pow((s - 1.00234), (10.0 / 13.0));
     } else {
         // mass < 1 case
-        return ((-7.47535 * s) - 0.686174) / gsl_sf_lambert_Wm1((-0.0176001 * s) - 0.00161554);
+        return ((-7.46001 * s) - 0.686172) / gsl_sf_lambert_Wm1((-0.0175644 * s) - 0.00161558);
     }
 }
 
