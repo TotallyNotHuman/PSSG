@@ -31,3 +31,17 @@ double sfac2mass(double s) {
         return ((-7.47535 * s) - 0.686174) / gsl_sf_lambert_Wm1((-0.0176001 * s) - 0.00161554);
     }
 }
+
+// compute luminosity from mass
+double mass2lum(double m) {
+    if (m > 55.0) {
+        return 32000.0 * m;
+    } else if ((m < 20.0) && (m > 2.0)) {
+        return 1.4 * pow(m, 3.5);
+    } else if ((m < 2.0) && (m > 0.43)) {
+        return pow(m, 4);
+    } else if (m < 0.43) {
+        return 0.23 * pow(m, 2.3);
+    }
+    return 0.0;
+}
