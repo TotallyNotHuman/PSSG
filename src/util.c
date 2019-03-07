@@ -1,5 +1,6 @@
 #include <math.h>
 #include <stdlib.h>
+#include <gsl/gsl_sf_lambert.h>
 #define PI 3.14159265358979323846 // pi macro since math.h doesn't include it
 
 // spherical to 3-dimensional Cartesian coordinates
@@ -18,4 +19,15 @@ double randbl(double min, double max) {
     double range = (max - min);
     double rng = RAND_MAX / range;
     return min + (rand() / rng);
+}
+
+// compute mass from selection factor
+double sfac2mass(double s) {
+    if (s > 0.718) {
+        // mass > 1 case
+        return 0.378247 / pow((1.00029 - s), (10.0 / 13.0));
+    } else {
+        // mass < 1 case
+        return ((-7.47535 * s) - 0.686174) / gsl_sf_lambert_Wm1((-0.0176001 * s) - 0.00161554);
+    }
 }
