@@ -1,7 +1,9 @@
-#!/usr/bin/env sh
-stable="0.0.2"
-gitrevs="`git rev-list v$stable..HEAD 2> /dev/null | wc -l)`"
-githash="`git rev-parse --short HEAD 2> /dev/null)`"
+#!/usr/bin/env bash
+version="0.0.2"
+stable=0
+gitrevs="`git rev-list v$version..HEAD 2> /dev/null | wc -l`"
+githash="`git rev-parse --short HEAD 2> /dev/null`"
+file="../src/version.h"
 
 if [ "$gitrevs" -eq "0" ]; then
     unset gitrevs
@@ -11,4 +13,8 @@ if [ -n "$gitrevs" ]; then
     gitrevs=".$gitrevs"
 fi
 
-printf "#ifndef VERSION\n#define VERSION \"%s%s-g%s\"\n#endif\n" "$stable" "$gitrevs" "$githash" > ../src/version.h
+if let $stable; then
+    printf "#ifndef VERSION\n#define VERSION \"$version\"\n#endif" > $file
+else
+    printf "#ifndef VERSION\n#define VERSION \"%s%s-g%s\"\n#endif" "$version" "$gitrevs" "$githash" > $file
+fi
