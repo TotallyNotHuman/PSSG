@@ -85,11 +85,11 @@ int main(void) {
                 state = 3;
                 break;
             case 3:
+                // debug output
                 for (unsigned short i = 0; i < param[1]; i++) {
-                    /*char* starstr = star_tostring(stars[i]);
-                    printf("%s\n", starstr);
-                    free(starstr);*/
-                    printf("M = %.3f, L = %.3f\n", stars[i]->mass, stars[i]->luminosity); // debug string for mass/lum
+                    printf("coords = (%.3f, %.3f, %.3f), mass = %.3f, luminosity = %.3f\n",
+                    stars[i]->coords[0], stars[i]->coords[1], stars[i]->coords[2],
+                    stars[i]->mass, stars[i]->luminosity);
                 }
                 state = 4;
                 break;
