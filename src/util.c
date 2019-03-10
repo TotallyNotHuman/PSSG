@@ -36,6 +36,8 @@ double sfac2mass(double s) {
 double mass2lum(double m) {
     if (m > 55.0) {
         return 32000.0 * m;
+    } else if ((m < 55.0) && (m > 20.0)) {
+        return pow(m, 3.5);
     } else if ((m < 20.0) && (m > 2.0)) {
         return 1.4 * pow(m, 3.5);
     } else if ((m < 2.0) && (m > 0.43)) {
