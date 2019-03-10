@@ -26,7 +26,7 @@ int main(void) {
      * 3 = display
      * 4 = cleanup
      */
-    printf("Procedural Star Generator, version %s\n", VERSION);
+    printf("Procedural Star System Generator, version %s\n", VERSION);
     for (;;) {
         switch (state) {
             case 0:
