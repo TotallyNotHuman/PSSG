@@ -24,13 +24,7 @@ double randbl(double min, double max) {
 
 // compute mass from selection factor
 double sfac2mass(double s) {
-    if (s > 0.719) {
-        // mass > 1 case
-        return a2 / pow((b2 - s), (10.0 / 13.0));
-    } else {
-        // mass < 1 case
-        return ((a * s) + b) / gsl_sf_lambert_Wm1((c * s) + d);
-    }
+    return (s > t) ? a2 / pow((b2 - s), (10.0 / 13.0)) : ((a * s) + b) / gsl_sf_lambert_Wm1((c * s) + d);
 }
 
 // compute luminosity from mass
