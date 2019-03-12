@@ -60,27 +60,26 @@ int main(void) {
                 for (unsigned short i = 0; i < param[1]; i++) {
                     stars[i] = malloc(sizeof(star_t));
                 }
-                unsigned short j = 0;
-                while (j < param[1]) {
-                    // generate coordinates and store them as cartesian
-                    double* sphrgen = malloc(3 * sizeof(double));
-                    sphrgen[0] = randbl(0.01, param[0]);
-                    sphrgen[1] = randbl(0.0, PI);
-                    sphrgen[2] = randbl(0.0, 2.0 * PI);
-                    double* cartgen = sphr2cart(sphrgen);
-                    stars[j]->coords[0] = cartgen[0];
-                    stars[j]->coords[1] = cartgen[1];
-                    stars[j]->coords[2] = cartgen[2];
-                    free(cartgen);
-                    free(sphrgen);
+                for (unsigned short i = 0; i < param[1]; i++) {
+                    // generate quaternion coordinates
+                    double quat[4];
+                    for (unsigned short j = 0; j < 4; j++) {
+                        quat[j] = randbl(0.0, 1.0);
+                    }
+                    // convert to 3-Cartesian
+                    double* cart = quat2cart(quat);
+                    // multiply by constant distribution radius
+                    double r1 = 1 / sqrt(randbl(0.000001, (double) param[0]));
+                    stars[i]->coords[0] = r1 * cart[0];
+                    stars[i]->coords[1] = r1 * cart[1];
+                    stars[i]->coords[2] = r1 * cart[2];
+                    free(cart);
                     // generate selection factor
                     double sfac = randbl(0.0, 1.0);
                     // generate mass from selfac
-                    stars[j]->mass = sfac2mass(sfac);
+                    stars[i]->mass = sfac2mass(sfac);
                     // generate lum from mass
-                    stars[j]->luminosity = mass2lum(stars[j]->mass);
-                    // increment counter
-                    j++;
+                    stars[i]->luminosity = mass2lum(stars[i]->mass);
                 }
                 state = 3;
                 break;
