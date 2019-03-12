@@ -4,23 +4,52 @@
 #include "constants.h"
 #define PI 3.14159265358979323846 // pi macro since math.h doesn't include it
 
-// spherical to 3-dimensional Cartesian coordinates
-double* sphr2cart(double* sphr) {
-    // assuming [rho, theta, phi]
+/* miscellaneous functions */
+
+// random double between min and max, assuming the RNG is already seeded
+double randbl(double min, double max) {
+    return min + (rand() / (RAND_MAX / (max - min)));
+}
+
+/* quaternion maths functions */
+
+// multiply quaternions
+double* quat_mult(double* p, double* q) {
+    double* r = malloc(4 * sizeof(double));
+    r[0] = ((p[0] * q[0]) - (p[1] * q[1]) - (p[2] * q[2]) - (p[3] * q[3]));
+    r[1] = ((p[0] * q[1]) + (p[1] * q[0]) - (p[2] * q[3]) + (p[3] * q[2]));
+    r[2] = ((p[0] * q[2]) + (p[1] * q[3]) + (p[2] * q[0]) - (p[3] * q[1]));
+    r[3] = ((p[0] * q[3]) - (p[1] * q[2]) + (p[2] * q[1]) + (p[3] * q[0]));
+    return r;
+}
+
+
+// normalize quaternion
+void quat_norm(double* q) {
+    double mag = sqrt(pow(q[0], 2) + pow(q[1], 2) + pow(q[2], 2) + pow(q[3], 2));
+    q[0] /= mag;
+    q[1] /= mag;
+    q[2] /= mag;
+    q[3] /= mag;
+}
+
+// quaternion to 3-Cartesian coordinates
+double* quat2cart(double* quat) {
+    quat_norm(quat);
+    double qconj[4] = {quat[0], (-1 * quat[1]), (-1 * quat[2]), (-1 * quat[3])};
+    double uvect[4] = {0, 1, 0, 0};
+    double* r1 = quat_mult(quat, uvect);
+    double* r2 = quat_mult(r1, qconj);
     double* cart = malloc(3 * sizeof(double));
-    cart[0] = sphr[0] * sin(sphr[1]) * cos(sphr[2]);
-    cart[1] = sphr[0] * sin(sphr[1]) * sin(sphr[2]);
-    cart[2] = sphr[0] * cos(sphr[1]);
+    cart[0] = r2[1];
+    cart[1] = r2[2];
+    cart[2] = r2[3];
+    free(r1);
+    free(r2);
     return cart;
 }
 
-// random double between min and max
-double randbl(double min, double max) {
-    // assume the RNG is already seeded
-    double range = (max - min);
-    double rng = RAND_MAX / range;
-    return min + (rand() / rng);
-}
+/* stellar computation functions */
 
 // compute mass from selection factor
 double sfac2mass(double s) {
