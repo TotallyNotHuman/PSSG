@@ -9,4 +9,5 @@ Note that PSSG now requires the GNU Scientific Library. The package on Ubuntu is
 
 Compilation instructions:
 
-`cd scripts; ./genver.sh; ./build.sh`
+`./build.sh` - ordinary build, nothing to see here
+`./build.sh -g` - if you think you fucked something up and want to use gdb/valgrind
