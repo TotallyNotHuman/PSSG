@@ -60,35 +60,50 @@ int main(void) {
                 for (unsigned short i = 0; i < param[1]; i++) {
                     stars[i] = malloc(sizeof(star_t));
                 }
-                for (unsigned short i = 0; i < param[1]; i++) {
-                    // generate quaternion coordinates
-                    double quat[4];
-                    for (unsigned short j = 0; j < 4; j++) {
-                        quat[j] = randbl(0.0, 1.0);
+                for (unsigned short j = 0; j < param[1]; j++) {
+                    // generate coordinates and store them as cartesian
+                    double* sphrgen = malloc(3 * sizeof(double));
+                    sphrgen[0] = randbl(0.01, param[0]);
+                    sphrgen[1] = randbl(0.0, PI);
+                    sphrgen[2] = randbl(0.0, 2.0 * PI);
+                    double* cartgen = sphr2cart(sphrgen);
+                    stars[j]->coords[0] = cartgen[0];
+                    stars[j]->coords[1] = cartgen[1];
+                    stars[j]->coords[2] = cartgen[2];
+                    free(cartgen);
+                    free(sphrgen);
+                    // generate weighted B-V
+                    double bvfac = randbl(0.0, 100.0);
+                    double bv = 0.0;
+                    if (bvfac <= 0.01) {
+                        bv = randbl(-0.33, -0.3);
+                    } else if ((bvfac >= 0.01) && (bvfac <= 0.13)) {
+                        bv = randbl(-0.3, -0.02);
+                    } else if ((bvfac >= 0.13) && (bvfac <= 0.73)) {
+                        bv = randbl(-0.02, 0.3);
+                    } else if ((bvfac >= 0.73) && (bvfac <= 3.73)) {
+                        bv = randbl(0.3, 0.58);
+                    } else if ((bvfac >= 3.73) && (bvfac <= 11.33)) {
+                        bv = randbl(0.58, 0.81);
+                    } else if ((bvfac >= 11.33) && (bvfac <= 23.43)) {
+                        bv = randbl(0.81, 1.40);
+                    } else if ((bvfac >= 23.43) && (bvfac <= 100.0)) {
+                        bv = randbl(1.40, 1.64);
                     }
-                    // convert to 3-Cartesian
-                    double* cart = quat2cart(quat);
-                    // multiply by constant distribution radius
-                    double r1 = 1 / sqrt(randbl(0.000001, (double) param[0]));
-                    stars[i]->coords[0] = r1 * cart[0];
-                    stars[i]->coords[1] = r1 * cart[1];
-                    stars[i]->coords[2] = r1 * cart[2];
-                    free(cart);
-                    // generate selection factor
-                    double sfac = randbl(0.0, 1.0);
-                    // generate mass from selfac
-                    stars[i]->mass = sfac2mass(sfac);
-                    // generate lum from mass
-                    stars[i]->luminosity = mass2lum(stars[i]->mass);
+                    // generate parameters from B-V
+                    stars[j]->temp = bv2temp(bv);
+                    stars[j]->radius = bv2rad(bv);
+                    stars[j]->luminosity = bv2lum(bv);
+                    stars[j]->mass = lum2mass(stars[j]->luminosity);
                 }
                 state = 3;
                 break;
             case 3:
                 // debug output
                 for (unsigned short i = 0; i < param[1]; i++) {
-                    printf("coords = (%.3f, %.3f, %.3f), mass = %.3f, luminosity = %.3f\n",
-                    stars[i]->coords[0], stars[i]->coords[1], stars[i]->coords[2],
-                    stars[i]->mass, stars[i]->luminosity);
+                    printf("coords = (%.3f, %.3f, %.3f), temp = %d K, rad = %f R_sol, lum = %f L_sol, mass = %f M_sol\n",
+                    stars[i]->coords[0], stars[i]->coords[1], stars[i]->coords[2], stars[i]->temp, stars[i]->radius,
+                    stars[i]->luminosity, stars[i]->mass);
                 }
                 state = 4;
                 break;
