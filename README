@@ -3,9 +3,7 @@ Procedural Star System Generator
 
 Phase 1: Star Generation
 
-The initial phase of the development of this program will focus exclusively on the generation of plausible stars. While higher-order systems will be introduced in phase 2, it is not currently considered.
-
-Note that PSSG now requires the GNU Scientific Library. The package on Ubuntu is `libgsl-dev`; however, your mileage may vary on other distributions or systems.
+The initial phase of the development of this program will focus exclusively on the generation of plausible stars. While higher-order stellar systems will be introduced in phase 2, it is not currently considered.
 
 Compilation instructions:
 
