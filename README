@@ -1,11 +1,17 @@
 Procedural Star System Generator
 ================================
 
-Phase 1: Star Generation
+The goal of the PSSG project is to generate scientifically plausible star systems for use with hard science fiction. This project is divided into many phases, representing various levels of feature maturity as it is developed.
 
-The initial phase of the development of this program will focus exclusively on the generation of plausible stars. While higher-order stellar systems will be introduced in phase 2, it is not currently considered.
+Phase 1: Star Generation
+The initial phase of the development of this program will focus exclusively on the generation of plausible stars.
 
 Compilation instructions:
 
 `./build.sh` - ordinary build, nothing to see here
 `./build.sh -g` - if you think you fucked something up and want to use gdb/valgrind
+
+Acknowledgements
+
+Many of the formulae used in Phase 1 are derived from the paper `Semi-analytical formulas for the Hertzsprung-Russell Diagram`, accessed at https://arxiv.org/pdf/0811.4524.pdf.
+Other articles of note include the Wikipedia entries on stellar classification and the mass-luminosity relation.
