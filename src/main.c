@@ -95,6 +95,33 @@ int main(void) {
                     stars[j]->radius = bv2rad(bv);
                     stars[j]->luminosity = bv2lum(bv);
                     stars[j]->mass = lum2mass(stars[j]->luminosity);
+                    // generate spectral class
+                    char* specclass = malloc(3 * sizeof(char));
+                    unsigned short temp = stars[j]->temp;
+                    unsigned short subdiv = 0;
+                    if ((temp >= 2300) && (temp <= 3700)) { // M-class stars
+                        subdiv = 10 - (unsigned short) ceil((temp - 2300) / 140);
+                        sprintf(specclass, "M%dV", subdiv);
+                    } else if ((temp >= 3700) && (temp <= 5200)) { // K-class stars
+                        subdiv = 10 - (unsigned short) ceil((temp - 3700) / 150);
+                        sprintf(specclass, "K%dV", subdiv);
+                    } else if ((temp >= 5200) && (temp <= 6000)) { // G-class stars
+                        subdiv = 10 - (unsigned short) ceil((temp - 5200) / 80);
+                        sprintf(specclass, "G%dV", subdiv);
+                    } else if ((temp >= 6000) && (temp <= 7500)) { // F-class stars
+                        subdiv = 10 - (unsigned short) ceil((temp - 6000) / 150);
+                        sprintf(specclass, "F%dV", subdiv);
+                    } else if ((temp >= 7500) && (temp <= 10000)) { // A-class stars
+                        subdiv = 10 - (unsigned short) ceil((temp - 7500) / 250);
+                        sprintf(specclass, "A%dV", subdiv);
+                    } else if ((temp >= 10000) && (temp <= 30000)) { // B-class stars
+                        subdiv = 10 - (unsigned short) ceil((temp - 10000) / 2000);
+                        sprintf(specclass, "B%dV", subdiv);
+                    } else if ((temp >= 30000) && (temp <= 55000)) { // O-class stars
+                        subdiv = 10 - (unsigned short) ceil((temp - 30000) / 2500);
+                        sprintf(specclass, "O%dV", subdiv);
+                    }
+                    stars[j]->specclass = specclass;
                 }
                 state = 3;
                 break;
