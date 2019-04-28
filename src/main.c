@@ -96,30 +96,30 @@ int main(void) {
                     stars[j]->luminosity = bv2lum(bv);
                     stars[j]->mass = lum2mass(stars[j]->luminosity);
                     // generate spectral class
-                    char* specclass = malloc(3 * sizeof(char));
+                    char* specclass = malloc(4 * sizeof(char));
                     unsigned short temp = stars[j]->temp;
                     unsigned short subdiv = 0;
                     if ((temp >= 2300) && (temp <= 3700)) { // M-class stars
-                        subdiv = 10 - (unsigned short) ceil((temp - 2300) / 140);
-                        sprintf(specclass, "M%dV", subdiv);
+                        subdiv = 10 - (unsigned short) ceil(((double) (temp - 2300)) / 140.0);
+                        sprintf(specclass, "M%d V", subdiv);
                     } else if ((temp >= 3700) && (temp <= 5200)) { // K-class stars
-                        subdiv = 10 - (unsigned short) ceil((temp - 3700) / 150);
-                        sprintf(specclass, "K%dV", subdiv);
+                        subdiv = 10 - (unsigned short) ceil(((double) (temp - 3700)) / 150.0);
+                        sprintf(specclass, "K%d V", subdiv);
                     } else if ((temp >= 5200) && (temp <= 6000)) { // G-class stars
-                        subdiv = 10 - (unsigned short) ceil((temp - 5200) / 80);
-                        sprintf(specclass, "G%dV", subdiv);
+                        subdiv = 10 - (unsigned short) ceil(((double) (temp - 5200)) / 80.0);
+                        sprintf(specclass, "G%d V", subdiv);
                     } else if ((temp >= 6000) && (temp <= 7500)) { // F-class stars
-                        subdiv = 10 - (unsigned short) ceil((temp - 6000) / 150);
-                        sprintf(specclass, "F%dV", subdiv);
+                        subdiv = 10 - (unsigned short) ceil(((double) (temp - 6000)) / 150.0);
+                        sprintf(specclass, "F%d V", subdiv);
                     } else if ((temp >= 7500) && (temp <= 10000)) { // A-class stars
-                        subdiv = 10 - (unsigned short) ceil((temp - 7500) / 250);
-                        sprintf(specclass, "A%dV", subdiv);
+                        subdiv = 10 - (unsigned short) ceil(((double) (temp - 7500)) / 250.0);
+                        sprintf(specclass, "A%d V", subdiv);
                     } else if ((temp >= 10000) && (temp <= 30000)) { // B-class stars
-                        subdiv = 10 - (unsigned short) ceil((temp - 10000) / 2000);
-                        sprintf(specclass, "B%dV", subdiv);
+                        subdiv = 10 - (unsigned short) ceil(((double) (temp - 10000)) / 2000.0);
+                        sprintf(specclass, "B%d V", subdiv);
                     } else if ((temp >= 30000) && (temp <= 55000)) { // O-class stars
-                        subdiv = 10 - (unsigned short) ceil((temp - 30000) / 2500);
-                        sprintf(specclass, "O%dV", subdiv);
+                        subdiv = 10 - (unsigned short) ceil(((double) (temp - 30000)) / 2500.0);
+                        sprintf(specclass, "O%d V", subdiv);
                     }
                     stars[j]->specclass = specclass;
                 }
