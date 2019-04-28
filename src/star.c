@@ -37,6 +37,6 @@ char* star_tostring(star_t* star) {
     } else {
         lumstr = " Main Sequence";
     }
-    sprintf(starstr, "Star class: %s %s%s\nCoordinates: (%.2f, %.2f, %.2f)\nMass: %.2f M☉\nRadius: %.2f R☉\nLuminosity: %.2f L☉\nTemperature: %d K\n", star->specclass, specstr, lumstr, star->coords[0], star->coords[1], star->coords[2], star->mass, star->radius, star->luminosity, star->temp);
+    sprintf(starstr, "Star class: %s %s%s\nCoordinates: (%.2f, %.2f, %.2f)\nMass: %.3g M☉\nRadius: %.3g R☉\nLuminosity: %.3g L☉\nTemperature: %d K\n", star->specclass, specstr, lumstr, star->coords[0], star->coords[1], star->coords[2], star->mass, star->radius, star->luminosity, star->temp);
     return starstr;
 }
