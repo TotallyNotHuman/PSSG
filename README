@@ -3,8 +3,11 @@ Procedural Star System Generator
 
 The goal of the PSSG project is to generate scientifically plausible star systems for use with hard science fiction. This project is divided into many phases, representing various levels of feature maturity as it is developed.
 
-Phase 1: Star Generation
-The initial phase of the development of this program will focus exclusively on the generation of plausible stars.
+Phase 1: Main-sequence Star Generation [Complete]
+The initial phase of the development of this program will focus exclusively on the generation of plausible main-sequence stars.
+
+Phase 2: Giant/Remnant Generation
+Giants and stellar remnants are derived via the application of time to main-sequence stars. The second phase will focus on the ramifications of such, including planetary nebulae and supernovae.
 
 Compilation instructions:
 
