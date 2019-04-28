@@ -88,7 +88,7 @@ int main(void) {
                     } else if ((bvfac >= 11.33) && (bvfac <= 23.43)) {
                         bv = randbl(0.81, 1.40);
                     } else if ((bvfac >= 23.43) && (bvfac <= 100.0)) {
-                        bv = randbl(1.40, 1.64);
+                        bv = randbl(1.40, 3.17);
                     }
                     // generate parameters from B-V
                     stars[j]->temp = bv2temp(bv);
