@@ -11,4 +11,7 @@ typedef struct star {
     double coords[3]; // coordinates of star wrt center
 } star_t;
 
+// star "visual"izer function
+char* star_tostring(star_t* star);
+
 #endif//STAR_H
