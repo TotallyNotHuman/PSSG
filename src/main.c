@@ -96,7 +96,7 @@ int main(void) {
                     stars[j]->luminosity = bv2lum(bv);
                     stars[j]->mass = lum2mass(stars[j]->luminosity);
                     // generate spectral class
-                    char* specclass = malloc(4 * sizeof(char));
+                    char* specclass = malloc(5 * sizeof(char));
                     unsigned short temp = stars[j]->temp;
                     unsigned short subdiv = 0;
                     if ((temp >= 2300) && (temp <= 3700)) { // M-class stars

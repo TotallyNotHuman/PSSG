@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-version="0.1.0"
+version="0.1.1"
 stable=1
 gitrevs="`git rev-list v$version..HEAD 2> /dev/null | wc -l`"
 githash="`git rev-parse --short HEAD 2> /dev/null`"
