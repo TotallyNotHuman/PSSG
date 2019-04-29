@@ -99,11 +99,8 @@ int main(void) {
                     char* specclass = malloc(5 * sizeof(char));
                     unsigned short temp = stars[j]->temp;
                     unsigned short subdiv = 0;
-                    if ((temp >= 2300) && (temp <= 3700)) { // M-class stars
-                        subdiv = 10 - (unsigned short) ceil(((double) (temp - 2300)) / 140.0);
-                        if (subdiv == 10) {
-                            subdiv--;
-                        }
+                    if ((temp >= 2200) && (temp <= 3700)) { // M-class stars
+                        subdiv = 10 - (unsigned short) ceil(((double) (temp - 2200)) / 150.0);
                         sprintf(specclass, "M%d V", subdiv);
                     } else if ((temp >= 3700) && (temp <= 5200)) { // K-class stars
                         subdiv = 10 - (unsigned short) ceil(((double) (temp - 3700)) / 150.0);
