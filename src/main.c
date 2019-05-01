@@ -22,7 +22,7 @@ int main(void) {
      * States:
      * 0 = radius of sector
      * 1 = number of stars
-     * 2 = generation
+     * 2 = mainseq generation
      * 3 = display
      * 4 = cleanup
      */
@@ -55,7 +55,7 @@ int main(void) {
                 state = 2;
                 break;
             case 2:
-                printf("Generating %hu stars in a spherical sector with %hu ly radius.\n", param[1], param[0]);
+                printf("Generating %hu stars in a spherical sector with %hu ly radius...", param[1], param[0]);
                 star_t** stars = malloc(param[1] * sizeof(star_t*));
                 for (unsigned short i = 0; i < param[1]; i++) {
                     stars[i] = malloc(sizeof(star_t));
@@ -92,51 +92,94 @@ int main(void) {
                     }
                     // generate parameters from B-V
                     stars[j]->temp = bv2temp(bv);
-                    stars[j]->radius = bv2rad(bv);
-                    stars[j]->luminosity = bv2lum(bv);
+                    stars[j]->radius = ms_bv2rad(bv);
+                    stars[j]->luminosity = ms_bv2lum(bv);
                     stars[j]->mass = lum2mass(stars[j]->luminosity);
+                    // generate age, lifespan, and flags if applicable
+                    stars[j]->age = randbl(0.0, 13.8);
+                    stars[j]->lifespan = 10 * pow(stars[j]->mass, -2.5);
+                    if (stars[j]->age > stars[j]->lifespan) {
+                        if ((stars[j]->mass >= 0.8) && (stars[j]->mass <= 10.0)) {
+                            stars[j]->flags = 0x1;
+                        } else if (stars[j]->mass >= 10.0) {
+                            stars[j]->flags = 0x2;
+                        }
+                    } else {
+                        stars[j]->flags = 0x0;
+                    }
+                    // regenerate params for (super)giants
+                    if (stars[j]->flags == 0x1) {
+                        stars[j]->radius = gs_bv2rad(bv);
+                        stars[j]->luminosity = gs_bv2lum(bv);
+                    } else if (stars[j]->flags == 0x2) {
+                        stars[j]->radius = sg_bv2rad(bv);
+                        stars[j]->luminosity = sg_bv2lum(bv);
+                    }
                     // generate spectral class
-                    char* specclass = malloc(5 * sizeof(char));
+                    char* specclass = malloc(3);
                     unsigned short temp = stars[j]->temp;
                     unsigned short subdiv = 0;
                     if ((temp >= 2200) && (temp <= 3700)) { // M-class stars
                         subdiv = 10 - (unsigned short) ceil(((double) (temp - 2200)) / 150.0);
-                        sprintf(specclass, "M%d V", subdiv);
+                        sprintf(specclass, "M%d", subdiv);
                     } else if ((temp >= 3700) && (temp <= 5200)) { // K-class stars
                         subdiv = 10 - (unsigned short) ceil(((double) (temp - 3700)) / 150.0);
-                        sprintf(specclass, "K%d V", subdiv);
+                        sprintf(specclass, "K%d", subdiv);
                     } else if ((temp >= 5200) && (temp <= 6000)) { // G-class stars
                         subdiv = 10 - (unsigned short) ceil(((double) (temp - 5200)) / 80.0);
-                        sprintf(specclass, "G%d V", subdiv);
+                        sprintf(specclass, "G%d", subdiv);
                     } else if ((temp >= 6000) && (temp <= 7500)) { // F-class stars
                         subdiv = 10 - (unsigned short) ceil(((double) (temp - 6000)) / 150.0);
-                        sprintf(specclass, "F%d V", subdiv);
+                        sprintf(specclass, "F%d", subdiv);
                     } else if ((temp >= 7500) && (temp <= 10000)) { // A-class stars
                         subdiv = 10 - (unsigned short) ceil(((double) (temp - 7500)) / 250.0);
-                        sprintf(specclass, "A%d V", subdiv);
+                        sprintf(specclass, "A%d", subdiv);
                     } else if ((temp >= 10000) && (temp <= 30000)) { // B-class stars
                         subdiv = 10 - (unsigned short) ceil(((double) (temp - 10000)) / 2000.0);
-                        sprintf(specclass, "B%d V", subdiv);
+                        sprintf(specclass, "B%d", subdiv);
                     } else if ((temp >= 30000) && (temp <= 55000)) { // O-class stars
                         subdiv = 10 - (unsigned short) ceil(((double) (temp - 30000)) / 2500.0);
-                        sprintf(specclass, "O%d V", subdiv);
+                        sprintf(specclass, "O%d", subdiv);
                     }
                     stars[j]->specclass = specclass;
+                    // generate luminosity class
+                    stars[j]->lumclass = malloc(4);
+                    if (stars[j]->flags == 0x0) {
+                        strcpy(stars[j]->lumclass, "V");
+                    } else if (stars[j]->flags == 0x1) {
+                        strcpy(stars[j]->lumclass, "III");
+                    } else if (stars[j]->flags == 0x2) {
+                        if ((stars[j]->luminosity >= 1000.0) && (stars[j]->luminosity <= 10000.0)) {
+                            strcpy(stars[j]->lumclass, "Ib");
+                        } else if ((stars[j]->luminosity >= 10000.0) && (stars[j]->luminosity <= 100000.0)) {
+                            strcpy(stars[j]->lumclass, "Iab");
+                        } else if ((stars[j]->luminosity >= 100000.0) && (stars[j]->luminosity <= 1000000.0)) {
+                            strcpy(stars[j]->lumclass, "Ia");
+                        } else if (stars[j]->luminosity >= 1000000.0) {
+                            strcpy(stars[j]->lumclass, "Ia+");
+                        }
+                    }
                 }
+                printf("done.\n\n");
                 state = 3;
                 break;
             case 3:
+                // TODO aging pass
+                state = 4;
+                break;
+            case 4:
                 // debug output
                 for (unsigned short i = 0; i < param[1]; i++) {
                     char* starstr = star_tostring(stars[i]);
                     printf("%s\n", starstr);
                     free(starstr);
                 }
-                state = 4;
+                state = 5;
                 break;
-            case 4:
+            case 5:
                 for (unsigned short i = 0; i < param[1]; i++) {
                     free(stars[i]->specclass);
+                    free(stars[i]->lumclass);
                     free(stars[i]);
                 }
                 free(stars);
