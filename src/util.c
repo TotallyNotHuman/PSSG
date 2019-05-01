@@ -23,21 +23,11 @@ double randbl(double min, double max) {
     return min + (rand() / rng);
 }
 
-/* stellar computation functions */
+/* generic stellar computation functions */
 
 // generate temperature from B-V
 unsigned short bv2temp(double bv) {
     return (unsigned short)(4600.0 * ((1 / ((0.92 * bv) + 1.7)) + (1 / ((0.92 * bv) + 0.62))));
-}
-
-// generate radius from B-V
-double bv2rad(double bv) {
-    return pow(10, (ba1 + (bb1 * log(bc / (bv + bd)))));
-}
-
-// generate luminosity from B-V
-double bv2lum(double bv) {
-    return pow(10, (ba2 + (bb2 * log(bc / (bv + bd)))));
 }
 
 // generate mass from luminosity
@@ -54,4 +44,40 @@ double lum2mass(double lum) {
         return lum * la5;
     }
     return 0.0;
+}
+
+/* mainseq-specific functions */
+
+// generate radius from B-V
+double ms_bv2rad(double bv) {
+    return pow(10, (ba1 + (bb1 * log(bc1 / (bv + bd1)))));
+}
+
+// generate luminosity from B-V
+double ms_bv2lum(double bv) {
+    return pow(10, (ba2 + (bb2 * log(bc1 / (bv + bd1)))));
+}
+
+/* giant-specific functions */
+
+// generate radius from B-V
+double gs_bv2rad(double bv) {
+    return pow(10, (ba3 + (bb3 * log(bc2 / (bv + bd2)))));
+}
+
+// generate luminosity from B-V
+double gs_bv2lum(double bv) {
+    return pow(10, (ba4 + (bb4 * log(bc2 / (bv + bd2)))));
+}
+
+/* supergiant-specific functions */
+
+// generate radius from B-V
+double sg_bv2rad(double bv) {
+    return (bv < 0.76) ? pow(10, (ba5 + (bb5 * log(bc3 / (bv + bd3))))) : pow(10, (ba6 + (bb6 * log(bc3 / (bv + bd3)))));
+}
+
+// generate luminosity from B-V
+double sg_bv2lum(double bv) {
+    return (bv < 0.76) ? pow(10, (ba7 + (bb7 * log(bc3 / (bv + bd3))))) : pow(10, (ba8 + (bb8 * log(bc3 / (bv + bd3)))));
 }
