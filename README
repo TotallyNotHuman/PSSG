@@ -11,6 +11,8 @@ Giants and stellar remnants are derived via the application of time to main-sequ
 
 Compilation instructions:
 
+First, run `git submodule init` and `git submodule update` if you haven't already.
+Then run one of the following:
 `./build.sh` - ordinary build, nothing to see here
 `./build.sh -g` - if you think you fucked something up and want to use gdb/valgrind
 
